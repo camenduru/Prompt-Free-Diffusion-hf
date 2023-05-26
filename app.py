@@ -523,7 +523,7 @@ if True:
                 The performance of Text2Image is largely dependent on text prompts. 
                 In Prompt-Free Diffusion, no prompt is needed, just a reference images! 
                 At the core of Prompt-Free Diffusion is an image-only semantic context encoder (SeeCoder). 
-                SeeCoder is reusable to any customized T2I models: just drop in and replace CLIP, then you will create your own prompt-free diffusion.
+                SeeCoder is reusable to most CLIP-based T2I models: just drop in and replace CLIP, then you will create your own prompt-free diffusion.
                 <a href="https://github.com/SHI-Labs/Prompt-Free-Diffusion">[Github]</a> <a href="https://arxiv.org/abs/2305.16223">[arXiv]</a>
             </p>
             </div>
