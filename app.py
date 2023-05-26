@@ -20,23 +20,42 @@ from lib.model_zoo import get_model
 from collections import OrderedDict
 from lib.model_zoo.ddim import DDIMSampler
 
+from huggingface_hub import hf_hub_download
+
 n_sample_image = 1
 
+# controlnet_path = OrderedDict([
+#     ['canny'             , ('canny'   , 'pretrained/controlnet/control_sd15_canny_slimmed.safetensors')],
+#     ['canny_v11p'        , ('canny'   , 'pretrained/controlnet/control_v11p_sd15_canny_slimmed.safetensors')],
+#     ['depth'             , ('depth'   , 'pretrained/controlnet/control_sd15_depth_slimmed.safetensors')],
+#     ['hed'               , ('hed'     , 'pretrained/controlnet/control_sd15_hed_slimmed.safetensors')],
+#     ['mlsd'              , ('mlsd'    , 'pretrained/controlnet/control_sd15_mlsd_slimmed.safetensors')],
+#     ['mlsd_v11p'         , ('mlsd'    , 'pretrained/controlnet/control_v11p_sd15_mlsd_slimmed.safetensors')],
+#     ['normal'            , ('normal'  , 'pretrained/controlnet/control_sd15_normal_slimmed.safetensors')],
+#     ['openpose'          , ('openpose', 'pretrained/controlnet/control_sd15_openpose_slimmed.safetensors')],
+#     ['openpose_v11p'     , ('openpose', 'pretrained/controlnet/control_v11p_sd15_openpose_slimmed.safetensors')],
+#     ['scribble'          , ('scribble', 'pretrained/controlnet/control_sd15_scribble_slimmed.safetensors')],
+#     ['softedge_v11p'     , ('scribble', 'pretrained/controlnet/control_v11p_sd15_softedge_slimmed.safetensors')],
+#     ['seg'               , ('none'    , 'pretrained/controlnet/control_sd15_seg_slimmed.safetensors')],
+#     ['lineart_v11p'      , ('none'    , 'pretrained/controlnet/control_v11p_sd15_lineart_slimmed.safetensors')],
+#     ['lineart_anime_v11p', ('none'    , 'pretrained/controlnet/control_v11p_sd15s2_lineart_anime_slimmed.safetensors')],
+# ])
+
 controlnet_path = OrderedDict([
-    ['canny'             , ('canny'   , 'pretrained/controlnet/control_sd15_canny_slimmed.safetensors')],
-    ['canny_v11p'        , ('canny'   , 'pretrained/controlnet/control_v11p_sd15_canny_slimmed.safetensors')],
-    ['depth'             , ('depth'   , 'pretrained/controlnet/control_sd15_depth_slimmed.safetensors')],
-    ['hed'               , ('hed'     , 'pretrained/controlnet/control_sd15_hed_slimmed.safetensors')],
-    ['mlsd'              , ('mlsd'    , 'pretrained/controlnet/control_sd15_mlsd_slimmed.safetensors')],
-    ['mlsd_v11p'         , ('mlsd'    , 'pretrained/controlnet/control_v11p_sd15_mlsd_slimmed.safetensors')],
-    ['normal'            , ('normal'  , 'pretrained/controlnet/control_sd15_normal_slimmed.safetensors')],
-    ['openpose'          , ('openpose', 'pretrained/controlnet/control_sd15_openpose_slimmed.safetensors')],
-    ['openpose_v11p'     , ('openpose', 'pretrained/controlnet/control_v11p_sd15_openpose_slimmed.safetensors')],
-    ['scribble'          , ('scribble', 'pretrained/controlnet/control_sd15_scribble_slimmed.safetensors')],
-    ['softedge_v11p'     , ('scribble', 'pretrained/controlnet/control_v11p_sd15_softedge_slimmed.safetensors')],
-    ['seg'               , ('none'    , 'pretrained/controlnet/control_sd15_seg_slimmed.safetensors')],
-    ['lineart_v11p'      , ('none'    , 'pretrained/controlnet/control_v11p_sd15_lineart_slimmed.safetensors')],
-    ['lineart_anime_v11p', ('none'    , 'pretrained/controlnet/control_v11p_sd15s2_lineart_anime_slimmed.safetensors')],
+    ['canny'             , ('canny'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_canny_slimmed.safetensors'))],
+    ['canny_v11p'        , ('canny'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_canny_slimmed.safetensors'))],
+    ['depth'             , ('depth'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_depth_slimmed.safetensors'))],
+    ['hed'               , ('hed'     , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_hed_slimmed.safetensors'))],
+    ['mlsd'              , ('mlsd'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_mlsd_slimmed.safetensors'))],
+    ['mlsd_v11p'         , ('mlsd'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_mlsd_slimmed.safetensors'))],
+    ['normal'            , ('normal'  , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_normal_slimmed.safetensors'))],
+    ['openpose'          , ('openpose', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_openpose_slimmed.safetensors'))],
+    ['openpose_v11p'     , ('openpose', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_openpose_slimmed.safetensors'))],
+    ['scribble'          , ('scribble', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_scribble_slimmed.safetensors'))],
+    ['softedge_v11p'     , ('scribble', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_softedge_slimmed.safetensors'))],
+    ['seg'               , ('none'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_seg_slimmed.safetensors'))],
+    ['lineart_v11p'      , ('none'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_lineart_slimmed.safetensors'))],
+    ['lineart_anime_v11p', ('none'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15s2_lineart_anime_slimmed.safetensors'))],
 ])
 
 preprocess_method = [
@@ -52,20 +71,36 @@ preprocess_method = [
     'none'                 ,
 ]
 
+# diffuser_path = OrderedDict([
+#     ['SD-v1.5'             , 'pretrained/pfd/diffuser/SD-v1-5.safetensors'],
+#     ['OpenJouney-v4'       , 'pretrained/pfd/diffuser/OpenJouney-v4.safetensors'],
+#     ['Deliberate-v2.0'     , 'pretrained/pfd/diffuser/Deliberate-v2-0.safetensors'],
+#     ['RealisticVision-v2.0', 'pretrained/pfd/diffuser/RealisticVision-v2-0.safetensors'],
+#     ['Anything-v4'         , 'pretrained/pfd/diffuser/Anything-v4.safetensors'],
+#     ['Oam-v3'              , 'pretrained/pfd/diffuser/AbyssOrangeMix-v3.safetensors'],
+#     ['Oam-v2'              , 'pretrained/pfd/diffuser/AbyssOrangeMix-v2.safetensors'],
+# ])
+
+# ctxencoder_path = OrderedDict([
+#     ['SeeCoder'      , 'pretrained/pfd/seecoder/seecoder-v1-0.safetensors'],
+#     ['SeeCoder-PA'   , 'pretrained/pfd/seecoder/seecoder-pa-v1-0.safetensors'],
+#     ['SeeCoder-Anime', 'pretrained/pfd/seecoder/seecoder-anime-v1-0.safetensors'],
+# ])
+
 diffuser_path = OrderedDict([
-    ['SD-v1.5'             , 'pretrained/pfd/diffuser/SD-v1-5.safetensors'],
-    ['OpenJouney-v4'       , 'pretrained/pfd/diffuser/OpenJouney-v4.safetensors'],
-    ['Deliberate-v2.0'     , 'pretrained/pfd/diffuser/Deliberate-v2-0.safetensors'],
-    ['RealisticVision-v2.0', 'pretrained/pfd/diffuser/RealisticVision-v2-0.safetensors'],
-    ['Anything-v4'         , 'pretrained/pfd/diffuser/Anything-v4.safetensors'],
-    ['Oam-v3'              , 'pretrained/pfd/diffuser/AbyssOrangeMix-v3.safetensors'],
-    ['Oam-v2'              , 'pretrained/pfd/diffuser/AbyssOrangeMix-v2.safetensors'],
+    ['SD-v1.5'             , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/SD-v1-5.safetensors')],
+    ['OpenJouney-v4'       , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/OpenJouney-v4.safetensors')],
+    ['Deliberate-v2.0'     , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/Deliberate-v2-0.safetensors')],
+    ['RealisticVision-v2.0', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/RealisticVision-v2-0.safetensors')],
+    ['Anything-v4'         , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/Anything-v4.safetensors')],
+    ['Oam-v3'              , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/AbyssOrangeMix-v3.safetensors')],
+    ['Oam-v2'              , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/AbyssOrangeMix-v2.safetensors')],
 ])
 
 ctxencoder_path = OrderedDict([
-    ['SeeCoder'      , 'pretrained/pfd/seecoder/seecoder-v1-0.safetensors'],
-    ['SeeCoder-PA'   , 'pretrained/pfd/seecoder/seecoder-pa-v1-0.safetensors'],
-    ['SeeCoder-Anime', 'pretrained/pfd/seecoder/seecoder-anime-v1-0.safetensors'],
+    ['SeeCoder'      , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/seecoder/seecoder-v1-0.safetensors')],
+    ['SeeCoder-PA'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/seecoder/seecoder-pa-v1-0.safetensors')],
+    ['SeeCoder-Anime', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/seecoder/seecoder-anime-v1-0.safetensors')],
 ])
 
 ##########
