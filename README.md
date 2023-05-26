@@ -1,7 +1,7 @@
 ---
 title: Prompt-Free Diffusion
 emoji: 👀
-colorFrom: orange
+colorFrom: red
 colorTo: blue
 sdk: gradio
 sdk_version: 3.32.0
