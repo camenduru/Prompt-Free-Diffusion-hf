@@ -60,14 +60,14 @@ controlnet_path = OrderedDict([
 
 preprocess_method = [
     'canny'                ,
-    # 'depth'                ,
+    'depth'                ,
     # 'hed'                  ,
-    # 'mlsd'                 ,
+    'mlsd'                 ,
     # 'normal'               ,
-    # 'openpose'             ,
-    # 'openpose_withface'    ,
-    # 'openpose_withfacehand',
-    # 'scribble'             ,
+    'openpose'             ,
+    'openpose_withface'    ,
+    'openpose_withfacehand',
+    'scribble'             ,
     'none'                 ,
 ]
 
@@ -414,9 +414,9 @@ def interface():
             button = gr.Button("Run")
         with gr.Column():
             ctl_input = gr.Image(label='Control Input', type='pil', elem_id='customized_imbox')
-            do_preprocess = gr.Checkbox(label='Preprocess (Disabled)', value=False)
+            do_preprocess = gr.Checkbox(label='Preprocess', value=False)
             with gr.Row():
-                ctl_method = gr.Dropdown(label='Preprocess Type (Fixed to none)', choices=preprocess_method, value='canny')
+                ctl_method = gr.Dropdown(label='Preprocess Type', choices=preprocess_method, value='canny')
                 tag_ctl    = gr.Dropdown(label='ControlNet',      choices=[pi for pi in controlnet_path.keys()], value='canny')
         with gr.Column():
             img_output = gr.Gallery(label="Image Result", elem_id='customized_imbox').style(grid=n_sample_image+1)
@@ -513,6 +513,19 @@ if True:
             <h1 style="font-weight: 900; font-size: 3rem; margin: 0rem">
                 Prompt-Free Diffusion
             </h1>
+            <p style="font-size: 1rem; margin: 0rem">
+                Xingqian Xu<sup>1,6</sup>, Jiayi Guo<sup>1,2</sup>, Zhangyang Wang<sup>3,6</sup>, Gao Huang<sup>2</sup>, Irfan Essa<sup>4,5</sup>, and Humphrey Shi<sup>1,6</sup>
+            </p>
+            <p style="font-size: 0.8rem; margin: 0rem; line-height: 1em">
+                <sup>1</sup>SHI Labs @ UIUC & Oregon, <sup>2</sup>Tsinghua University, <sup>3</sup>UT Austin, <sup>4</sup>Georgia Tech, <sup>5</sup>Google Research, <sup>6</sup>Picsart AI Research (PAIR)
+            </p>
+            <p style="font-size: 0.9rem; margin: 0rem; line-height: 1.2em; margin-top:1em">
+                The performance of Text2Image is largely dependent on text prompts. 
+                In Prompt-Free Diffusion, no prompt is needed, just a reference images! 
+                At the core of Prompt-Free Diffusion is an image-only semantic context encoder (SeeCoder). 
+                SeeCoder is reusable to any customized T2I models: just drop in and replace CLIP, then you will create your own prompt-free diffusion.
+                <a href="https://github.com/SHI-Labs/Prompt-Free-Diffusion">[Github]</a> <a href="https://arxiv.org/abs/2305.16223">[arXiv]</a>
+            </p>
             </div>
             """)
 
