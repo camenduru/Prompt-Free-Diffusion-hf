@@ -1,5 +1,5 @@
 ---
-title: Prompt-Free Diffusion
+title: Prompt-Free Diffusion (SeeCoder)
 emoji: 👀
 colorFrom: red
 colorTo: blue
