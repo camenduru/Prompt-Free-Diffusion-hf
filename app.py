@@ -43,13 +43,13 @@ n_sample_image = 1
 
 controlnet_path = OrderedDict([
     ['canny'             , ('canny'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_canny_slimmed.safetensors'))],
-    ['canny_v11p'        , ('canny'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_canny_slimmed.safetensors'))],
+    # ['canny_v11p'        , ('canny'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_canny_slimmed.safetensors'))],
     ['depth'             , ('depth'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_depth_slimmed.safetensors'))],
-    ['hed'               , ('hed'     , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_hed_slimmed.safetensors'))],
+    # ['hed'               , ('hed'     , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_hed_slimmed.safetensors'))],
     ['mlsd'              , ('mlsd'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_mlsd_slimmed.safetensors'))],
-    ['mlsd_v11p'         , ('mlsd'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_mlsd_slimmed.safetensors'))],
-    ['normal'            , ('normal'  , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_normal_slimmed.safetensors'))],
-    ['openpose'          , ('openpose', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_openpose_slimmed.safetensors'))],
+    # ['mlsd_v11p'         , ('mlsd'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_mlsd_slimmed.safetensors'))],
+    # ['normal'            , ('normal'  , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_normal_slimmed.safetensors'))],
+    # ['openpose'          , ('openpose', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_openpose_slimmed.safetensors'))],
     ['openpose_v11p'     , ('openpose', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_openpose_slimmed.safetensors'))],
     ['scribble'          , ('scribble', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_scribble_slimmed.safetensors'))],
     ['softedge_v11p'     , ('scribble', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_softedge_slimmed.safetensors'))],
@@ -59,15 +59,15 @@ controlnet_path = OrderedDict([
 ])
 
 preprocess_method = [
-    'canny'                ,
-    'depth'                ,
-    'hed'                  ,
-    'mlsd'                 ,
-    'normal'               ,
-    'openpose'             ,
-    'openpose_withface'    ,
-    'openpose_withfacehand',
-    'scribble'             ,
+    # 'canny'                ,
+    # 'depth'                ,
+    # 'hed'                  ,
+    # 'mlsd'                 ,
+    # 'normal'               ,
+    # 'openpose'             ,
+    # 'openpose_withface'    ,
+    # 'openpose_withfacehand',
+    # 'scribble'             ,
     'none'                 ,
 ]
 
@@ -146,7 +146,7 @@ class prompt_free_diffusion(object):
         self.net = get_model()(cfgm)
         sdvae = hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/vae/sd-v2-0-base-autokl.pth')
         sdvae = torch.load(sdvae)
-        self.net.vae.load_state_dict(sdvae)
+        self.net.vae['image'].load_state_dict(sdvae)
         
         self.action_load_ctx(tag_ctx)
         self.action_load_diffuser(tag_diffuser)
@@ -414,9 +414,9 @@ def interface():
             button = gr.Button("Run")
         with gr.Column():
             ctl_input = gr.Image(label='Control Input', type='pil', elem_id='customized_imbox')
-            do_preprocess = gr.Checkbox(label='Preprocess', value=False)
+            do_preprocess = gr.Checkbox(label='Preprocess (Disabled)', value=False)
             with gr.Row():
-                ctl_method = gr.Dropdown(label='Preprocess Type', choices=preprocess_method, value='canny')
+                ctl_method = gr.Dropdown(label='Preprocess Type (Fixed to none)', choices=preprocess_method, value='canny')
                 tag_ctl    = gr.Dropdown(label='ControlNet',      choices=[pi for pi in controlnet_path.keys()], value='canny')
         with gr.Column():
             img_output = gr.Gallery(label="Image Result", elem_id='customized_imbox').style(grid=n_sample_image+1)
