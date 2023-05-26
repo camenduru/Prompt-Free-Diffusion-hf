@@ -144,6 +144,9 @@ class prompt_free_diffusion(object):
 
         cfgm = model_cfg_bank()('pfd_seecoder_with_controlnet')
         self.net = get_model()(cfgm)
+        sdvae = hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/vae/sd-v2-0-base-autokl.pth')
+        sdvae = torch.load(sdvae)
+        self.net.vae.load_state_dict(sdvae)
         
         self.action_load_ctx(tag_ctx)
         self.action_load_diffuser(tag_diffuser)

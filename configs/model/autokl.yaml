@@ -19,8 +19,6 @@ autokl_v1:
       attn_resolutions: []
       dropout: 0.0
     lossconfig: null
-  pth: pretrained/kl-f8.pth
 
 autokl_v2:
   super_cfg: autokl_v1
-  pth: pretrained/pfd/vae/sd-v2-0-base-autokl.pth
