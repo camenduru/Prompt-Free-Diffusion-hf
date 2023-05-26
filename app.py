@@ -239,9 +239,9 @@ class prompt_free_diffusion(object):
         w = w//64 * 64
         h = h//64 * 64
         w = w if w >=512 else 512
-        w = w if w <=1536 else 1536
+        w = w if w <=1024 else 1024
         h = h if h >=512 else 512
-        h = h if h <=1536 else 1536
+        h = h if h <=1024 else 1024
         return h, w
 
     def action_autoset_method(self, tag):
@@ -373,27 +373,27 @@ def get_example():
             'SeeCoder-Anime', 'Anything-v4', 'canny', ],
         [
             'assets/examples-anime/random0.jpg', 
-            'assets/examples-anime/pose.png', 
+            'assets/examples-anime/pose_small.png', 
             'openpose', False, 
-            768, 1536, 2.0, 41, 
+            768, 1024, 2.0, 41, 
             'SeeCoder-Anime', 'Oam-v2', 'openpose_v11p', ],
         [
             'assets/examples-anime/random1.jpg', 
-            'assets/examples-anime/pose.png', 
+            'assets/examples-anime/pose_small.png', 
             'openpose', False, 
-            768, 1536, 2.5, 28, 
+            768, 1024, 2.5, 29, 
             'SeeCoder-Anime', 'Oam-v2', 'openpose_v11p', ], 
         [
             'assets/examples-anime/camping.jpg', 
-            'assets/examples-anime/pose.png', 
+            'assets/examples-anime/pose_small.png', 
             'openpose', False, 
-            768, 1536, 2.0, 35, 
+            768, 1024, 2.0, 38, 
             'SeeCoder-Anime', 'Anything-v4', 'openpose_v11p', ],
         [
             'assets/examples-anime/hanfu_girl.jpg', 
-            'assets/examples-anime/pose.png', 
+            'assets/examples-anime/pose_small.png', 
             'openpose', False, 
-            768, 1536, 2.0, 20, 
+            768, 1024, 2.0, 20, 
             'SeeCoder-Anime', 'Anything-v4', 'openpose_v11p', ],
     ]
     return case
@@ -403,10 +403,10 @@ def interface():
         with gr.Column():
             img_input = gr.Image(label='Image Input', type='pil', elem_id='customized_imbox')
             with gr.Row():
-                out_width  = gr.Slider(label="Width" , minimum=512, maximum=1536, value=512, step=64, visible=True)
-                out_height = gr.Slider(label="Height", minimum=512, maximum=1536, value=512, step=64, visible=True)
+                out_width  = gr.Slider(label="Width" , minimum=512, maximum=1024, value=512, step=64, visible=True)
+                out_height = gr.Slider(label="Height", minimum=512, maximum=1024, value=512, step=64, visible=True)
             with gr.Row():
-                scl_lvl = gr.Slider(label="CFGScale", minimum=0, maximum=10, value=2, step=0.01, visible=True)
+                scl_lvl = gr.Slider(label="CFGScale", minimum=0, maximum=4, value=2, step=0.01, visible=True)
                 seed = gr.Number(20, label="Seed", precision=0)
             with gr.Row():
                 tag_ctx = gr.Dropdown(label='Context Encoder', choices=[pi for pi in ctxencoder_path.keys()], value='SeeCoder')
