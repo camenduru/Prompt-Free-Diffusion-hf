@@ -59,7 +59,7 @@ controlnet_path = OrderedDict([
 ])
 
 preprocess_method = [
-    # 'canny'                ,
+    'canny'                ,
     # 'depth'                ,
     # 'hed'                  ,
     # 'mlsd'                 ,
