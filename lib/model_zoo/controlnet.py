@@ -14,54 +14,6 @@ from .openaimodel import \
     ResBlock, AttentionBlock, SpatialTransformer, \
     Downsample, timestep_embedding
 
-####################
-# preprocess depth #
-####################
-
-# depth_model = None
-
-# def unload_midas_model():
-#     global depth_model
-#     if depth_model is not None:
-#         depth_model = depth_model.cpu()
-
-# def apply_midas(input_image, a=np.pi*2.0, bg_th=0.1, device='cpu'):
-#     import cv2
-#     from einops import rearrange
-#     from .controlnet_annotators.midas import MiDaSInference
-#     global depth_model
-#     if depth_model is None:
-#         depth_model = MiDaSInference(model_type="dpt_hybrid")
-#         depth_model = depth_model.to(device)
-    
-#     assert input_image.ndim == 3
-#     image_depth = input_image
-#     with torch.no_grad():
-#         image_depth = torch.from_numpy(image_depth).float()
-#         image_depth = image_depth.to(device)
-#         image_depth = image_depth / 127.5 - 1.0
-#         image_depth = rearrange(image_depth, 'h w c -> 1 c h w')
-#         depth = depth_model(image_depth)[0]
-
-#         depth_pt = depth.clone()
-#         depth_pt -= torch.min(depth_pt)
-#         depth_pt /= torch.max(depth_pt)
-#         depth_pt = depth_pt.cpu().numpy()
-#         depth_image = (depth_pt * 255.0).clip(0, 255).astype(np.uint8)
-
-#         depth_np = depth.cpu().numpy()
-#         x = cv2.Sobel(depth_np, cv2.CV_32F, 1, 0, ksize=3)
-#         y = cv2.Sobel(depth_np, cv2.CV_32F, 0, 1, ksize=3)
-#         z = np.ones_like(x) * a
-#         x[depth_pt < bg_th] = 0
-#         y[depth_pt < bg_th] = 0
-#         normal = np.stack([x, y, z], axis=2)
-#         normal /= np.sum(normal ** 2.0, axis=2, keepdims=True) ** 0.5
-#         normal_image = (normal * 127.5 + 127.5).clip(0, 255).astype(np.uint8)
-
-#         return depth_image, normal_image
-
-
 @register('controlnet')
 class ControlNet(nn.Module):
     def __init__(
@@ -360,37 +312,41 @@ class ControlNet(nn.Module):
             return y_torch
 
         elif type == 'depth':
-            from .controlnet_annotator.midas import apply_midas
+            from .controlnet_annotator.midas import apply_midas, unload_midas_model
             y_list, _ = zip(*[apply_midas(input_image=np.array(xi), a=np.pi*2.0, device=device) for xi in x_list])
             y_torch = torch.stack([tvtrans.ToTensor()(yi) for yi in y_list])
             y_torch = y_torch.repeat(1, 3, 1, 1) # Make is RGB
             y_torch = y_torch.to(device).to(torch.float32)
+            unload_midas_model()
             return y_torch
 
         elif type in ['hed', 'softedge_v11p']:
-            from .controlnet_annotator.hed import apply_hed
+            from .controlnet_annotator.hed import apply_hed, unload_hed_model
             y_list = [apply_hed(np.array(xi), device=device) for xi in x_list]
             y_torch = torch.stack([tvtrans.ToTensor()(yi) for yi in y_list])
             y_torch = y_torch.repeat(1, 3, 1, 1) # Make is RGB
             y_torch = y_torch.to(device).to(torch.float32)
+            from .controlnet_annotator.midas import model as model_midas
+            unload_hed_model()
             return y_torch
 
         elif type in ['mlsd', 'mlsd_v11p']:
             thr_v = kwargs.pop('thr_v', 0.1)
             thr_d = kwargs.pop('thr_d', 0.1)
-            from .controlnet_annotator.mlsd import apply_mlsd
+            from .controlnet_annotator.mlsd import apply_mlsd, unload_mlsd_model
             y_list = [apply_mlsd(np.array(xi), thr_v=thr_v, thr_d=thr_d, device=device) for xi in x_list]
             y_torch = torch.stack([tvtrans.ToTensor()(yi) for yi in y_list])
             y_torch = y_torch.repeat(1, 3, 1, 1) # Make is RGB
             y_torch = y_torch.to(device).to(torch.float32)
+            unload_mlsd_model()
             return y_torch
 
         elif type == 'normal':
             bg_th = kwargs.pop('bg_th', 0.4)
-            from .controlnet_annotator.midas import apply_midas
+            from .controlnet_annotator.midas import apply_midas, unload_midas_model
             _, y_list = zip(*[apply_midas(input_image=np.array(xi), a=np.pi*2.0, bg_th=bg_th, device=device) for xi in x_list])
             y_torch = torch.stack([tvtrans.ToTensor()(yi.copy()) for yi in y_list])
-            y_torch = y_torch.to(device).to(torch.float32)
+            unload_midas_model()
             return y_torch
 
         elif type in ['openpose', 'openpose_v11p']:
@@ -403,6 +359,7 @@ class ControlNet(nn.Module):
             y_list = [apply_openpose(np.array(xi)) for xi in x_list]
             y_torch = torch.stack([tvtrans.ToTensor()(yi.copy()) for yi in y_list])
             y_torch = y_torch.to(device).to(torch.float32)
+            OpenposeModel.unload()
             return y_torch
 
         elif type in ['openpose_withface', 'openpose_withface_v11p']:
@@ -415,6 +372,7 @@ class ControlNet(nn.Module):
             y_list = [apply_openpose(np.array(xi)) for xi in x_list]
             y_torch = torch.stack([tvtrans.ToTensor()(yi.copy()) for yi in y_list])
             y_torch = y_torch.to(device).to(torch.float32)
+            OpenposeModel.unload()
             return y_torch
 
         elif type in ['openpose_withfacehand', 'openpose_withfacehand_v11p']:
@@ -427,6 +385,7 @@ class ControlNet(nn.Module):
             y_list = [apply_openpose(np.array(xi)) for xi in x_list]
             y_torch = torch.stack([tvtrans.ToTensor()(yi.copy()) for yi in y_list])
             y_torch = y_torch.to(device).to(torch.float32)
+            OpenposeModel.unload()
             return y_torch
 
         elif type == 'scribble':
@@ -454,21 +413,23 @@ class ControlNet(nn.Module):
                 return result
 
             if method == 'hed':
-                from .controlnet_annotator.hed import apply_hed
+                from .controlnet_annotator.hed import apply_hed, unload_hed_model
                 y_list = [apply_hed(np.array(xi), device=device) for xi in x_list]
                 y_list = [make_scribble(yi) for yi in y_list]
                 y_torch = torch.stack([tvtrans.ToTensor()(yi) for yi in y_list])
                 y_torch = y_torch.repeat(1, 3, 1, 1) # Make is RGB
                 y_torch = y_torch.to(device).to(torch.float32)
+                unload_hed_model()
                 return y_torch
             
             elif method == 'pidinet':
-                from .controlnet_annotator.pidinet import apply_pidinet
+                from .controlnet_annotator.pidinet import apply_pidinet, unload_pid_model
                 y_list = [apply_pidinet(np.array(xi), device=device) for xi in x_list]
                 y_list = [make_scribble(yi) for yi in y_list]
                 y_torch = torch.stack([tvtrans.ToTensor()(yi) for yi in y_list])
                 y_torch = y_torch.repeat(1, 3, 1, 1) # Make is RGB
                 y_torch = y_torch.to(device).to(torch.float32)
+                unload_pid_model()
                 return y_torch
 
             elif method == 'xdog':
@@ -491,13 +452,14 @@ class ControlNet(nn.Module):
                 raise ValueError
 
         elif type == 'seg':
-            method = kwargs.pop('method', 'ufade20k')
-            if method == 'ufade20k':
-                from .controlnet_annotator.uniformer import apply_uniformer
-                y_list = [apply_uniformer(np.array(xi), palette='ade20k', device=device) for xi in x_list]
-                y_torch = torch.stack([tvtrans.ToTensor()(yi) for yi in y_list])
-                y_torch = y_torch.to(device).to(torch.float32)
-                return y_torch
+            assert False, "This part is broken"
+            # method = kwargs.pop('method', 'ufade20k')
+            # if method == 'ufade20k':
+            #     from .controlnet_annotator.uniformer import apply_uniformer
+            #     y_list = [apply_uniformer(np.array(xi), palette='ade20k', device=device) for xi in x_list]
+            #     y_torch = torch.stack([tvtrans.ToTensor()(yi) for yi in y_list])
+            #     y_torch = y_torch.to(device).to(torch.float32)
+            #     return y_torch
 
-            else:
-                raise ValueError
+            # else:
+            #     raise ValueError
