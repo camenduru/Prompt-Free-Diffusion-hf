@@ -319,7 +319,7 @@ pfd_inference = prompt_free_diffusion(
 # sub interface #
 #################
 
-cache_examples = True
+cache_examples = False
 
 def get_example():
     case = [
