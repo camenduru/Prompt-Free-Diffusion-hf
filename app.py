@@ -42,20 +42,20 @@ n_sample_image = 1
 # ])
 
 controlnet_path = OrderedDict([
-    ['canny'             , ('canny'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_canny_slimmed.safetensors'))],
-    # ['canny_v11p'        , ('canny'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_canny_slimmed.safetensors'))],
-    ['depth'             , ('depth'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_depth_slimmed.safetensors'))],
-    # ['hed'               , ('hed'     , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_hed_slimmed.safetensors'))],
-    ['mlsd'              , ('mlsd'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_mlsd_slimmed.safetensors'))],
-    # ['mlsd_v11p'         , ('mlsd'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_mlsd_slimmed.safetensors'))],
-    # ['normal'            , ('normal'  , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_normal_slimmed.safetensors'))],
-    # ['openpose'          , ('openpose', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_openpose_slimmed.safetensors'))],
-    ['openpose_v11p'     , ('openpose', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_openpose_slimmed.safetensors'))],
-    ['scribble'          , ('scribble', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_scribble_slimmed.safetensors'))],
-    ['softedge_v11p'     , ('scribble', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_softedge_slimmed.safetensors'))],
-    ['seg'               , ('none'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_seg_slimmed.safetensors'))],
-    ['lineart_v11p'      , ('none'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_lineart_slimmed.safetensors'))],
-    ['lineart_anime_v11p', ('none'    , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15s2_lineart_anime_slimmed.safetensors'))],
+    ['canny'             , ('canny'   , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_canny_slimmed.safetensors'))],
+    # ['canny_v11p'        , ('canny'   , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_canny_slimmed.safetensors'))],
+    ['depth'             , ('depth'   , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_depth_slimmed.safetensors'))],
+    # ['hed'               , ('hed'     , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_hed_slimmed.safetensors'))],
+    ['mlsd'              , ('mlsd'    , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_mlsd_slimmed.safetensors'))],
+    # ['mlsd_v11p'         , ('mlsd'    , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_mlsd_slimmed.safetensors'))],
+    # ['normal'            , ('normal'  , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_normal_slimmed.safetensors'))],
+    # ['openpose'          , ('openpose', hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_openpose_slimmed.safetensors'))],
+    ['openpose_v11p'     , ('openpose', hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_openpose_slimmed.safetensors'))],
+    ['scribble'          , ('scribble', hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_scribble_slimmed.safetensors'))],
+    ['softedge_v11p'     , ('scribble', hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_softedge_slimmed.safetensors'))],
+    ['seg'               , ('none'    , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_sd15_seg_slimmed.safetensors'))],
+    ['lineart_v11p'      , ('none'    , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15_lineart_slimmed.safetensors'))],
+    ['lineart_anime_v11p', ('none'    , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/controlnet/control_v11p_sd15s2_lineart_anime_slimmed.safetensors'))],
 ])
 
 preprocess_method = [
@@ -88,19 +88,19 @@ preprocess_method = [
 # ])
 
 diffuser_path = OrderedDict([
-    ['SD-v1.5'             , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/SD-v1-5.safetensors')],
-    ['OpenJouney-v4'       , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/OpenJouney-v4.safetensors')],
-    ['Deliberate-v2.0'     , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/Deliberate-v2-0.safetensors')],
-    ['RealisticVision-v2.0', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/RealisticVision-v2-0.safetensors')],
-    ['Anything-v4'         , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/Anything-v4.safetensors')],
-    ['Oam-v3'              , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/AbyssOrangeMix-v3.safetensors')],
-    ['Oam-v2'              , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/diffuser/AbyssOrangeMix-v2.safetensors')],
+    ['SD-v1.5'             , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/pfd/diffuser/SD-v1-5.safetensors')],
+    ['OpenJouney-v4'       , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/pfd/diffuser/OpenJouney-v4.safetensors')],
+    ['Deliberate-v2.0'     , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/pfd/diffuser/Deliberate-v2-0.safetensors')],
+    ['RealisticVision-v2.0', hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/pfd/diffuser/RealisticVision-v2-0.safetensors')],
+    ['Anything-v4'         , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/pfd/diffuser/Anything-v4.safetensors')],
+    ['Oam-v3'              , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/pfd/diffuser/AbyssOrangeMix-v3.safetensors')],
+    ['Oam-v2'              , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/pfd/diffuser/AbyssOrangeMix-v2.safetensors')],
 ])
 
 ctxencoder_path = OrderedDict([
-    ['SeeCoder'      , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/seecoder/seecoder-v1-0.safetensors')],
-    ['SeeCoder-PA'   , hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/seecoder/seecoder-pa-v1-0.safetensors')],
-    ['SeeCoder-Anime', hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/seecoder/seecoder-anime-v1-0.safetensors')],
+    ['SeeCoder'      , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/pfd/seecoder/seecoder-v1-0.safetensors')],
+    ['SeeCoder-PA'   , hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/pfd/seecoder/seecoder-pa-v1-0.safetensors')],
+    ['SeeCoder-Anime', hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/pfd/seecoder/seecoder-anime-v1-0.safetensors')],
 ])
 
 ##########
@@ -144,7 +144,7 @@ class prompt_free_diffusion(object):
 
         cfgm = model_cfg_bank()('pfd_seecoder_with_controlnet')
         self.net = get_model()(cfgm)
-        sdvae = hf_hub_download('shi-labs/prompt-free-diffusion', 'pretrained/pfd/vae/sd-v2-0-base-autokl.pth')
+        sdvae = hf_hub_download('ckpt/prompt-free-diffusion', 'pretrained/pfd/vae/sd-v2-0-base-autokl.pth')
         sdvae = torch.load(sdvae)
         self.net.vae['image'].load_state_dict(sdvae)
         
@@ -524,7 +524,7 @@ if True:
                 In Prompt-Free Diffusion, no prompt is needed, just a reference images! 
                 At the core of Prompt-Free Diffusion is an image-only semantic context encoder (SeeCoder). 
                 SeeCoder is reusable to most CLIP-based T2I models: just drop in and replace CLIP, then you will create your own prompt-free diffusion.
-                <a href="https://github.com/SHI-Labs/Prompt-Free-Diffusion">[Github]</a> <a href="https://arxiv.org/abs/2305.16223">[arXiv]</a>
+                <a href="https://github.com/shi-labs/prompt-free-diffusion">[Github]</a> <a href="https://arxiv.org/abs/2305.16223">[arXiv]</a>
             </p>
             </div>
             """)
