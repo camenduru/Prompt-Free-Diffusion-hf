@@ -542,4 +542,4 @@ if True:
 
     # demo.launch(server_name="0.0.0.0", server_port=7992)
     # demo.launch()
-    demo.launch(debug=True)
+    demo.launch(debug=True, share=True)
